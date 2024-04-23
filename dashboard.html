@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Projeto Integrador</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Impede a rolagem da página */
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            background-color: #111;
+            padding-top: 20px;
+            border-right: 3px solid gold; /* Adiciona uma borda dourada à direita */
+            z-index: 1; /* Garante que a barra lateral fique acima de tudo */
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #818181;
+            transition: color 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .dashboard-container {
+            flex: 1; /* Ocupa o espaço restante */
+            position: relative;
+            overflow: hidden; /* Impede a rolagem da imagem */
+        }
+
+        .dashboard-image {
+            width: 100vw; /* Largura total da tela */
+            height: 100vh; /* Altura total da tela */
+            object-fit: cover; /* Ajusta a imagem para cobrir a área */
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .content {
+            position: absolute;
+            top: 0;
+            left: 250px; /* Largura da barra lateral */
+            padding: 20px;
+            color: #fff;
+            z-index: 2; /* Garante que o texto fique acima da imagem */
+            box-shadow: none; /* Remove o sombreado */
+            max-width: calc(100vw - 250px); /* Largura máxima do texto */
+        }
+
+        .text-box {
+            max-width: 600px; /* Largura máxima da caixa de texto */
+            margin-bottom: 20px;
+        }
+
+        .text-box label {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .text-box input[type="email"],
+        .text-box input[type="text"],
+        .text-box textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .text-box textarea {
+            resize: vertical; /* Permite redimensionamento vertical */
+        }
+
+        .submit-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para as abas ativas */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Estilizando o botão de logout */
+        .logout-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 210px; /* Ajusta a largura para o mesmo tamanho da barra lateral */
+            padding: 10px;
+            background-color: #007bff; /* Cor azul bonita */
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px; /* Bordas arredondadas */
+            transition: background-color 0.3s; /* Transição suave de cor ao passar o mouse */
+            z-index: 3; /* Garante que o botão fique acima do texto */
+        }
+
+        .logout-button:hover {
+            background-color: #0056b3; /* Cor azul mais escura ao passar o mouse */
+        }
+
+        /* Estilos para os botões de vídeo */
+        .video-buttons {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .video-buttons button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .video-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <a href="#sobre" onclick="openTab('sobre')">Sobre a Univesp</a>
+            <a href="#projeto" onclick="openTab('projeto')">Projeto Integrador</a>
+            <a href="#videos" onclick="openTab('videos')">Vídeos</a>
+            <a href="#duvidas" onclick="openTab('duvidas')">Dúvidas</a>
+            <a href="#depoimentos" onclick="openTab('depoimentos')">Depoimentos</a>
+            <a href="#sugestoesfeedback" onclick="openTab('sugestoesfeedback')">Sugestões e Feedback</a>
+        </div>
+
+        <div class="dashboard-container">
+            <img class="dashboard-image" src="https://i.ibb.co/bmkrvWt/Site-Empresarial-Aplicativo-de-Tecnologia-Ousado-Roxo-e-Azul-escuro-4.png" alt="Dashboard Image">
+            <div class="content">
+                <div id="sobre" class="tab-content active">
+                    <h2>Sobre a Univesp</h2>
+                    <p>Este é o conteúdo sobre a Univesp. Você pode editar este texto conforme necessário.</p>
+                </div>
+                <div id="projeto" class="tab-content">
+                    <h2>Projeto Integrador</h2>
+                    <p>Este é o conteúdo sobre o Projeto Integrador. Você pode editar este texto conforme necessário.</p>
+                </div>
+                <div id="videos" class="tab-content">
+                    <h2>Vídeos</h2>
+                    <div class="video-container">
+                        <video id="video1" width="640" height="360" controls style="display: none;">
+                            <source src="caminho/do/seu/video1.mp4" type="video/mp4">
+                            Seu navegador não suporta o elemento de vídeo.
+                        </video>
+                        <video id="video2" width="640" height="360" controls style="display: none;">
+                            <source src="caminho/do/seu/video2.mp4" type="video/mp4">
+                            Seu navegador não suporta o elemento de vídeo.
+                        </video>
+                        <div class="video-buttons">
+                            <button onclick="previousVideo()">Vídeo Anterior</button>
+                            <button onclick="nextVideo()">Próximo Vídeo</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="duvidas" class="tab-content">
+                    <h2>Dúvidas</h2>
+                    <div class="text-box">
+                        <form id="form-duvidas">
+                            <label for="email-duvida">E-mail:</label>
+                            <input type="email" id="email-duvida" name="email-duvida" placeholder="Digite seu e-mail">
+                            <label for="nome-duvida">Nome:</label>
+                            <input type="text" id="nome-duvida" name="nome-duvida" placeholder="Digite seu nome">
+                            <textarea id="texto-duvida" name="texto-duvida" rows="4" placeholder="Digite sua dúvida aqui"></textarea>
+                            <button class="submit-button" onclick="enviarDados('duvidas', 'form-duvidas')">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="depoimentos" class="tab-content">
+                    <h2>Depoimentos</h2>
+                    <div class="text-box">
+                        <form id="form-depoimentos">
+                            <label for="email-depoimento">E-mail:</label>
+                            <input type="email" id="email-depoimento" name="email-depoimento" placeholder="Digite seu e-mail">
+                            <label for="nome-depoimento">Nome:</label>
+                            <input type="text" id="nome-depoimento" name="nome-depoimento" placeholder="Digite seu nome">
+                            <textarea id="texto-depoimento" name="texto-depoimento" rows="4" placeholder="Digite seu depoimento aqui"></textarea>
+                            <button class="submit-button" onclick="enviarDados('depoimentos', 'form-depoimentos')">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="sugestoesfeedback" class="tab-content">
+                    <h2>Sugestões e Feedback</h2>
+                    <div class="text-box">
+                        <form id="form-sugestoesfeedback">
+                            <label for="email-sugestao">E-mail:</label>
+                            <input type="email" id="email-sugestao" name="email-sugestao" placeholder="Digite seu e-mail">
+                            <label for="nome-sugestao">Nome:</label>
+                            <input type="text" id="nome-sugestao" name="nome-sugestao" placeholder="Digite seu nome">
+                            <textarea id="texto-sugestao" name="texto-sugestao" rows="4" placeholder="Digite sua sugestão ou feedback aqui"></textarea>
+                            <button class="submit-button" onclick="enviarDados('sugestoesfeedback', 'form-sugestoesfeedback')">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="logout-button" onclick="logout()">Logout</button>
+
+    <script>
+        // Função para alternar entre as abas
+        function openTab(tabName) {
+            var i, tabContents;
+            tabContents = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+        }
+
+        // Função para logout
+        function logout() {
+            // Redirecionar o usuário para a página de logout
+            window.location.href = "logout.php";
+        }
+
+        // Funções para controle de vídeos
+        var currentVideoIndex = 0;
+        var videos = document.querySelectorAll('video');
+
+        function previousVideo() {
+            currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+            updateVideo();
+        }
+
+        function nextVideo() {
+            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            updateVideo();
+        }
+
+        function updateVideo() {
+            for (var i = 0; i < videos.length; i++) {
+                videos[i].style.display = 'none';
+            }
+            videos[currentVideoIndex].style.display = 'block';
+        }
+
+        // Atualizar vídeo inicial
+        updateVideo();
+
+        // Função para enviar os dados do formulário
+        function enviarDados(formName, formId) {
+            var form = document.getElementById(formId);
+            var formData = new FormData(form);
+
+            fetch('enviar_dados.php?type=' + formName, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    var sucessoMessage = '';
+                    if (formName === 'duvidas') {
+                        sucessoMessage = 'Dúvida enviada com sucesso!';
+                    } else {
+                        sucessoMessage = 'Dados enviados com sucesso!';
+                    }
+                    alert(sucessoMessage); // Exibe a mensagem de sucesso como um alerta
+                    // Limpar os campos do formulário após o envio
+                    limparCamposFormulario(formId);
+                } else {
+                    console.error('Erro ao enviar dados.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar dados:', error);
+            });
+        }
+
+        // Função para limpar os campos do formulário após o envio bem-sucedido
+        function limparCamposFormulario(formId) {
+            var form = document.getElementById(formId);
+            
+            // Verificar se o formulário foi encontrado corretamente
+            if (form) {
+                form.reset();
+            } else {
+                console.error('Formulário não encontrado:', formId);
+            }
+        }
+
+        // Remover parâmetros desnecessários da URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+    </script>
+</body>
+</html>
