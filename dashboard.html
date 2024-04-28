@@ -137,12 +137,17 @@
         }
 
         /* Estilos para os botões de vídeo */
-        .video-buttons {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .video-container {
+            position: relative;
         }
+
+        .video-buttons {
+    position: absolute;
+    bottom: -40px; /* Ajusta a posição para abaixo do vídeo */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Centraliza horizontalmente */
+    text-align: center; /* Centraliza o texto dentro da div */
+}
 
         .video-buttons button {
             padding: 10px 20px;
@@ -158,7 +163,6 @@
         .video-buttons button:hover {
             background-color: #0056b3;
         }
-
     </style>
 </head>
 <body>
