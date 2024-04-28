@@ -33,6 +33,7 @@
             box-shadow: 0 0 30px 5px rgba(255, 215, 0, 0.5); /* Borda reluzente dourada */
             margin-right: 200px; /* Deslocamento para o lado direito */
             margin-left: 80px; /* Deslocamento para o lado esquerdo */
+            position: relative; /* Adiciona posição relativa para permitir o posicionamento absoluto do ícone */
         }
         /* Estilos para o cabeçalho */
         h2 {
@@ -52,7 +53,7 @@
         input[type="email"],
         input[type="password"],
         input[type="submit"] {
-            width: 100%; /* Largura total */
+            width: calc(100% - 40px); /* Largura total menos a largura do ícone */
             padding: 12px;
             margin-bottom: 20px;
             border-radius: 5px;
@@ -62,6 +63,7 @@
             transition: border-color 0.3s;
             background-color: rgba(255, 255, 255, 0.1);
             color: #fff;
+            position: relative; /* Adiciona posição relativa para permitir o posicionamento absoluto do ícone */
         }
         /* Estilos para os campos de entrada quando focados ou hover */
         input[type="text"]:focus,
@@ -102,6 +104,22 @@
             text-align: center;
             color: #fff;
         }
+        /* Estilos para a mensagem de erro */
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+        /* Estilos para o ícone de olho */
+        .eye-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px; /* Ajusta a posição do ícone */
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #ffd700;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
@@ -116,20 +134,27 @@
             <input type="email" id="email" name="email" required>
 
             <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" required>
+            <div style="position: relative;">
+                <input type="password" id="senha" name="senha" required>
+                <span class="eye-icon">&#128274;</span>
+            </div>
 
             <input type="submit" value="Registrar">
             <!-- Adicionando estilos ao link de entrada -->
             <p style="color: #fff; text-align: center;">Já tem uma conta? <a href="login.php" style="color: #ffd700; text-decoration: none; font-weight: bold;">Entrar</a></p>
+            <!-- Exibição da mensagem de erro -->
+            <?php if (isset($erroSenha)) { ?>
+                <p class="error-message"><?php echo $erroSenha; ?></p>
+            <?php } ?>
         </form>
     </div>
 
     <?php
     // Configuração do banco de dados
-    $servername = "localhost:3307"; // Servidor MySQL (ou MariaDB)
-    $username = "root";
-    $password = "ProjetoPI2425";
-    $dbname = "form";
+    $servername = "localhost:3307"; // Servidor MariaDB
+    $username = "root"; // Nome de usuário do MySQL
+    $password = "ProjetoPI2425"; // Senha do MySQL (vazia no seu caso)
+    $dbname = "form"; // Nome do banco de dados
 
     // Conexão com o banco de dados
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -146,30 +171,38 @@
         $email = $_POST["email"];
         $senha = $_POST["senha"];
 
-        // Verifica se o e-mail já está cadastrado
-        $sql_check_email = "SELECT * FROM users WHERE email = ?";
-        $stmt_check_email = $conn->prepare($sql_check_email);
-        $stmt_check_email->bind_param("s", $email);
-        $stmt_check_email->execute();
-        $result_check_email = $stmt_check_email->get_result();
+        // Verifica se a senha atende aos critérios de segurança
+        function verificarSenha($senha) {
+            // Verifica se a senha tem pelo menos 8 caracteres, uma letra maiúscula e um caractere especial
+            if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/", $senha)) {
+                return "A senha deve conter pelo menos 8 caracteres, incluindo pelo menos uma letra maiúscula, um número e um caractere especial.";
+            }
 
-        if ($result_check_email->num_rows > 0) {
-            // E-mail já está cadastrado, exiba uma mensagem de erro ou redirecione para uma página de erro
-            echo "Este e-mail já está cadastrado. Por favor, faça login ou use outro e-mail.";
+            // Se a senha atender aos critérios, retorna true
+            return true;
+        }
+
+        // Verifica se a senha atende aos critérios
+        $erroSenha = verificarSenha($senha);
+
+        // Se a senha não for válida, exibe a mensagem de erro
+        if ($erroSenha !== true) {
+            // Não é necessário exibir a mensagem aqui, pois já está sendo exibida no formulário
         } else {
-            // E-mail não está cadastrado, proceda com o registro normalmente
-            // Prepara a consulta SQL usando declarações preparadas
-            $sql = "INSERT INTO users (nome, email, senha) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($sql);
+            // Hash da senha
+            $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
-            // Vincula os parâmetros e executa a consulta
-            $stmt->bind_param("sss", $nome, $email, $senha);
+            // Prepara e executa a consulta SQL para inserir os dados no banco de dados
+            $sql = "INSERT INTO users (nome, email, senha_hash) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sss", $nome, $email, $senha_hash);
+
             if ($stmt->execute()) {
-                // Redireciona para a página de login
-                echo '<script>window.location.href = "login.php";</script>';
-                exit; // Encerra o script após o redirecionamento
+                // Registro bem-sucedido
+                // Você pode adicionar uma mensagem de sucesso aqui, se desejar
             } else {
-                echo "Erro ao inserir os dados: " . $stmt->error;
+                // Erro ao registrar
+                // Você pode adicionar uma mensagem de erro aqui, se desejar
             }
         }
     }
@@ -177,5 +210,20 @@
     // Fecha a conexão com o banco de dados
     $conn->close();
     ?>
+
+    <!-- Script para mostrar/esconder a senha -->
+    <script>
+        function togglePasswordVisibility() {
+            var senhaInput = document.getElementById("senha");
+            var eyeIcon = document.querySelector(".eye-icon");
+            if (senhaInput.type === "password") {
+                senhaInput.type = "text";
+                eyeIcon.innerHTML = "&#128065;"; // Olho aberto
+            } else {
+                senhaInput.type = "password";
+                eyeIcon.innerHTML = "&#128274;"; // Olho fechado
+            }
+        }
+    </script>
 </body>
 </html>
