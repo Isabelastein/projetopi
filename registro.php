@@ -64,6 +64,7 @@
             background-color: rgba(255, 255, 255, 0.1);
             color: #fff;
             position: relative; /* Adiciona posição relativa para permitir o posicionamento absoluto do ícone */
+            width: 100%; /* Define a largura para 100% */
         }
         /* Estilos para os campos de entrada quando focados ou hover */
         input[type="text"]:focus,
@@ -110,16 +111,6 @@
             text-align: center;
             margin-top: 10px;
         }
-        /* Estilos para o ícone de olho */
-        .eye-icon {
-            position: absolute;
-            top: 50%;
-            right: 10px; /* Ajusta a posição do ícone */
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #ffd700;
-            font-size: 20px;
-        }
     </style>
 </head>
 <body>
@@ -134,10 +125,7 @@
             <input type="email" id="email" name="email" required>
 
             <label for="senha">Senha:</label>
-            <div style="position: relative;">
-                <input type="password" id="senha" name="senha" required>
-                <span class="eye-icon">&#128274;</span>
-            </div>
+            <input type="password" id="senha" name="senha" required>
 
             <input type="submit" value="Registrar">
             <!-- Adicionando estilos ao link de entrada -->
@@ -210,20 +198,5 @@
     // Fecha a conexão com o banco de dados
     $conn->close();
     ?>
-
-    <!-- Script para mostrar/esconder a senha -->
-    <script>
-        function togglePasswordVisibility() {
-            var senhaInput = document.getElementById("senha");
-            var eyeIcon = document.querySelector(".eye-icon");
-            if (senhaInput.type === "password") {
-                senhaInput.type = "text";
-                eyeIcon.innerHTML = "&#128065;"; // Olho aberto
-            } else {
-                senhaInput.type = "password";
-                eyeIcon.innerHTML = "&#128274;"; // Olho fechado
-            }
-        }
-    </script>
 </body>
 </html>
