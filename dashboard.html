@@ -142,12 +142,13 @@
         }
 
         .video-buttons {
-    position: absolute;
-    bottom: -40px; /* Ajusta a posição para abaixo do vídeo */
-    left: 50%; /* Centraliza horizontalmente */
-    transform: translateX(-50%); /* Centraliza horizontalmente */
-    text-align: center; /* Centraliza o texto dentro da div */
-}
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 100%;
+        }
 
         .video-buttons button {
             padding: 10px 20px;
@@ -162,6 +163,65 @@
 
         .video-buttons button:hover {
             background-color: #0056b3;
+        }
+
+        /* Estilos para o texto "Sobre a Univesp" */
+        #sobre-texto {
+            max-width: 600px; /* Largura máxima do texto */
+            margin-bottom: 20px;
+        }
+
+        /* Estilos para o texto "Projeto Integrador" */
+        #projeto-texto {
+            max-width: 600px; /* Largura máxima do texto */
+            margin-bottom: 20px;
+        }
+        
+        /* Estilos para o texto "Dúvidas" */
+        #duvidas-texto {
+            max-width: 600px; /* Largura máxima do texto */
+            margin-bottom: 20px;
+        }
+        
+        /* Estilos para o texto "Depoimentos" */
+        #depoimentos-texto {
+            max-width: 600px; /* Largura máxima do texto */
+            margin-bottom: 20px;
+        }
+        
+        /* Estilos para o texto "Sugestões e Feedback" */
+        #sugestoesfeedback-texto {
+            max-width: 600px; /* Largura máxima do texto */
+            margin-bottom: 20px;
+        }
+
+        .video {
+            display: none;
+        }
+
+        .video.active {
+            display: block;
+        }
+
+     /* Estilo para todas as caixas de texto */
+     textarea,
+        input[type="text"],
+        input[type="email"] {
+            width: calc(100% - 24px); /* Tamanho igual ao das caixas de depoimentos */
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            resize: vertical; /* Permite redimensionamento vertical apenas para caixas de texto */
+        }
+
+        /* Estilo para a mensagem de sucesso */
+        .success-message {
+            display: none;
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -180,66 +240,93 @@
             <img class="dashboard-image" src="https://i.ibb.co/bmkrvWt/Site-Empresarial-Aplicativo-de-Tecnologia-Ousado-Roxo-e-Azul-escuro-4.png" alt="Dashboard Image">
             <div class="content">
                 <div id="sobre" class="tab-content active">
-                    <h2>Sobre a Univesp</h2>
-                    <p>Este é o conteúdo sobre a Univesp. Você pode editar este texto conforme necessário.</p>
+                    <div id="sobre-texto">
+                        <h2>Sobre a Univesp</h2>
+                        <p>A Universidade Virtual do Estado de São Paulo (Univesp) é uma instituição de ensino superior gratuita e mantida pelo Governo do Estado de São Paulo. Criada em 2012, a Univesp é uma universidade pública exclusivamente voltada para a Educação a Distância (EAD).</p>
+                        
+                        <p>A Univesp oferece uma ampla variedade de cursos de graduação em diversas áreas do conhecimento, incluindo Ciências Exatas, Humanas e Biológicas. Entre os cursos disponíveis estão Engenharia de Computação, Pedagogia, Matemática, entre outros. Todos os cursos são desenvolvidos e oferecidos com a mesma qualidade e rigor acadêmico encontrados nas melhores universidades presenciais.</p>
+                        
+                        <p>A abordagem de ensino a distância oferece flexibilidade de horários e acesso a recursos online, permitindo que os alunos conciliem seus estudos com outras responsabilidades. Além disso, a Univesp tem orgulho de sua reputação de excelência acadêmica, reconhecida nacional e internacionalmente.</p>
+                        
+                        <p>Com uma comunidade de aprendizagem diversificada e uma infraestrutura tecnológica de ponta, a Univesp está comprometida em fornecer uma educação acessível e de qualidade para todos, contribuindo para o desenvolvimento socioeconômico do Estado de São Paulo e além.</p>
+                    </div>
                 </div>
+                
                 <div id="projeto" class="tab-content">
-                    <h2>Projeto Integrador</h2>
-                    <p>Este é o conteúdo sobre o Projeto Integrador. Você pode editar este texto conforme necessário.</p>
+                    <div id="projeto-texto" class="text-box">
+                        <h2>Projeto Integrador</h2>
+                        <p>O Projeto Integrador (PI) é uma atividade curricular obrigatória da Univesp, projetada para preparar os alunos para enfrentar desafios reais do mercado de trabalho. Durante o PI, os alunos são incentivados a aplicar os conhecimentos adquiridos ao longo do curso para resolver problemas práticos e desenvolver projetos inovadores.</p>
+                        
+                        <p>O objetivo principal do PI é promover a integração entre teoria e prática, permitindo que os alunos desenvolvam habilidades técnicas e comportamentais essenciais para sua formação profissional. Além disso, o PI é uma oportunidade para que os alunos trabalhem em equipe, aprimorem suas capacidades de comunicação e gestão de projetos.</p>
+                        
+                        <p>Os projetos desenvolvidos no PI são supervisionados por professores experientes, que oferecem orientação e suporte durante todo o processo. Ao final do projeto, os alunos apresentam seus trabalhos em uma banca avaliadora, composta por docentes e profissionais do mercado, que avaliam a qualidade e relevância das soluções propostas.</p>
+                        
+                        <p>Com o PI, a Univesp busca garantir que seus alunos estejam preparados para enfrentar os desafios do mundo profissional, tornando-se agentes de transformação em suas áreas de atuação.</p>
+                    </div>
                 </div>
+                
                 <div id="videos" class="tab-content">
-                    <h2>Vídeos</h2>
-                    <div class="video-container">
-                        <video id="video1" width="640" height="360" controls style="display: none;">
-                            <source src="caminho/do/seu/video1.mp4" type="video/mp4">
-                            Seu navegador não suporta o elemento de vídeo.
-                        </video>
-                        <video id="video2" width="640" height="360" controls style="display: none;">
-                            <source src="caminho/do/seu/video2.mp4" type="video/mp4">
-                            Seu navegador não suporta o elemento de vídeo.
-                        </video>
-                        <div class="video-buttons">
+                    <div id="videos-texto" class="text-box">
+                        <h2>Vídeos</h2>
+                        <p>Explore os vídeos abaixo, criados por uma de nossas alunas, onde ela compartilha sua visão e experiência pessoal sobre o tema da síndrome em estudo. Cada vídeo oferece uma perspectiva detalhada e perspicaz, proporcionando insights valiosos sobre os sintomas e outras informações relevantes. Sinta-se à vontade para assistir aos vídeos na ordem indicada.</p>
+                        <div class="video-container">
+                            <div class="video video1">
+                                <iframe id="video1" width="640" height="360" src="https://www.youtube.com/embed/Tkz51q1D3_c" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <div class="video video2">
+                                <iframe id="video2" width="640" height="360" src="https://www.youtube.com/embed/NCFZZR1iD1Y" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <div class="video video3">
+                                <iframe id="video3" width="640" height="360" src="https://www.youtube.com/embed/nirol_6MfsA" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="video-buttons" style="text-align: center;">
                             <button onclick="previousVideo()">Vídeo Anterior</button>
                             <button onclick="nextVideo()">Próximo Vídeo</button>
                         </div>
                     </div>
                 </div>
+
+
                 <div id="duvidas" class="tab-content">
-                    <h2>Dúvidas</h2>
-                    <div class="text-box">
-                        <form id="form-duvidas">
-                            <label for="email-duvida">E-mail:</label>
-                            <input type="email" id="email-duvida" name="email-duvida" placeholder="Digite seu e-mail">
-                            <label for="nome-duvida">Nome:</label>
-                            <input type="text" id="nome-duvida" name="nome-duvida" placeholder="Digite seu nome">
-                            <textarea id="texto-duvida" name="texto-duvida" rows="4" placeholder="Digite sua dúvida aqui"></textarea>
-                            <button class="submit-button" onclick="enviarDados('duvidas', 'form-duvidas')">Enviar</button>
+                    <div id="duvidas-texto" class="text-box">
+                        <h2>Dúvidas</h2>
+                        <p>Tem alguma dúvida sobre a síndrome de Witteveen-Kolk? Preencha o formulário abaixo e nossa equipe terá prazer em responder o mais breve possível.</p>
+                        <form id="duvidas-form" onsubmit="submitForm(event, 'duvidas')">
+                            <input type="text" name="nome-duvida" placeholder="Seu nome" required><br>
+                            <input type="email" name="email-duvida" placeholder="Seu e-mail" required><br>
+                            <textarea name="texto-duvida" placeholder="Sua dúvida" required></textarea><br>
+                            <button type="submit" class="submit-button">Enviar</button>
+                            <div class="success-message" id="duvidas-success">Sua dúvida foi enviada com sucesso!</div>
                         </form>
                     </div>
                 </div>
+                
                 <div id="depoimentos" class="tab-content">
-                    <h2>Depoimentos</h2>
-                    <div class="text-box">
-                        <form id="form-depoimentos">
-                            <label for="email-depoimento">E-mail:</label>
-                            <input type="email" id="email-depoimento" name="email-depoimento" placeholder="Digite seu e-mail">
-                            <label for="nome-depoimento">Nome:</label>
-                            <input type="text" id="nome-depoimento" name="nome-depoimento" placeholder="Digite seu nome">
-                            <textarea id="texto-depoimento" name="texto-depoimento" rows="4" placeholder="Digite seu depoimento aqui"></textarea>
-                            <button class="submit-button" onclick="enviarDados('depoimentos', 'form-depoimentos')">Enviar</button>
+                    <div id="depoimentos-texto" class="text-box">
+                        <h2>Depoimentos</h2>
+                        <p>Compartilhe sua experiência pessoal com a síndrome de Witteveen-Kolk. Seu depoimento pode ajudar outras pessoas que estão passando pelo mesmo desafio.</p>
+                        <form id="depoimentos-form" onsubmit="submitForm(event, 'depoimentos')">
+                            <input type="text" name="nome-depoimento" placeholder="Seu nome" required><br>
+                            <input type="email" name="email-depoimento" placeholder="Seu e-mail" required><br>
+                            <textarea name="texto-depoimento" placeholder="Seu depoimento" required></textarea><br>
+                            <button type="submit" class="submit-button">Enviar</button>
+                            <div class="success-message" id="depoimentos-success">Seu depoimento foi enviado com sucesso!</div>
                         </form>
                     </div>
                 </div>
+                
                 <div id="sugestoesfeedback" class="tab-content">
-                    <h2>Sugestões e Feedback</h2>
-                    <div class="text-box">
-                        <form id="form-sugestoesfeedback">
-                            <label for="email-sugestao">E-mail:</label>
-                            <input type="email" id="email-sugestao" name="email-sugestao" placeholder="Digite seu e-mail">
-                            <label for="nome-sugestao">Nome:</label>
-                            <input type="text" id="nome-sugestao" name="nome-sugestao" placeholder="Digite seu nome">
-                            <textarea id="texto-sugestao" name="texto-sugestao" rows="4" placeholder="Digite sua sugestão ou feedback aqui"></textarea>
-                            <button class="submit-button" onclick="enviarDados('sugestoesfeedback', 'form-sugestoesfeedback')">Enviar</button>
+                    <div id="sugestoesfeedback-texto" class="text-box">
+                        <h2>Sugestões e Feedback</h2>
+                        <p>Tem alguma sugestão ou feedback sobre este site? Queremos ouvir você! Use o formulário abaixo para nos enviar suas sugestões, críticas ou elogios.</p>
+                        <form id="sugestoesfeedback-form" onsubmit="submitForm(event, 'sugestoesfeedback')">
+                            <input type="text" name="nome-sugestao" placeholder="Seu nome" required><br>
+                            <input type="email" name="email-sugestao" placeholder="Seu e-mail" required><br>
+                            <textarea name="texto-sugestao" placeholder="Sua sugestão ou feedback" required></textarea><br>
+                            <button type="submit" class="submit-button">Enviar</button>
+                            <div class="success-message" id="sugestoesfeedback-success">Sua sugestão/feedback foi enviado com sucesso!</div>
                         </form>
                     </div>
                 </div>
@@ -252,87 +339,72 @@
     <script>
         // Função para alternar entre as abas
         function openTab(tabName) {
-            var i, tabContents;
-            tabContents = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove("active");
+            var i, tabContent;
+            tabContent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].classList.remove("active");
             }
             document.getElementById(tabName).classList.add("active");
         }
-
-        // Função para logout
-        function logout() {
-            // Redirecionar o usuário para a página de logout
-            window.location.href = "logout.php";
-        }
-
-        // Funções para controle de vídeos
-        var currentVideoIndex = 0;
-        var videos = document.querySelectorAll('video');
-
-        function previousVideo() {
-            currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
-            updateVideo();
-        }
-
-        function nextVideo() {
-            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-            updateVideo();
-        }
-
-        function updateVideo() {
+    
+        // Função para exibir o vídeo correspondente ao botão clicado
+        function showVideo(videoId) {
+            var videos = document.getElementsByClassName("video");
             for (var i = 0; i < videos.length; i++) {
-                videos[i].style.display = 'none';
+                videos[i].classList.remove("active");
             }
-            videos[currentVideoIndex].style.display = 'block';
+            document.getElementById(videoId).classList.add("active");
         }
-
-        // Atualizar vídeo inicial
-        updateVideo();
-
-        // Função para enviar os dados do formulário
-        function enviarDados(formName, formId) {
-            var form = document.getElementById(formId);
-            var formData = new FormData(form);
-
-            fetch('enviar_dados.php?type=' + formName, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    var sucessoMessage = '';
-                    if (formName === 'duvidas') {
-                        sucessoMessage = 'Dúvida enviada com sucesso!';
-                    } else {
-                        sucessoMessage = 'Dados enviados com sucesso!';
-                    }
-                    alert(sucessoMessage); // Exibe a mensagem de sucesso como um alerta
-                    // Limpar os campos do formulário após o envio
-                    limparCamposFormulario(formId);
+    
+        // Função para enviar o formulário e exibir a mensagem de sucesso
+        function submitForm(event, formName) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+            var form = document.getElementById(formName + '-form');
+            var successMessage = document.getElementById(formName + '-success');
+            form.reset(); // Limpa os campos do formulário
+            successMessage.style.display = 'block'; // Exibe a mensagem de sucesso
+            setTimeout(function() {
+                successMessage.style.display = 'none'; // Esconde a mensagem após 5 segundos
+            }, 5000);
+        }
+    
+        // Função para fazer logout
+        function logout() {
+            // Redireciona para login.php
+            window.location.href = "login.php";
+        }
+    
+        // Remove os parâmetros da URL após o caractere "?"
+        var urlWithoutParams = window.location.href.split('?')[0];
+        window.history.replaceState({}, document.title, urlWithoutParams);
+    </script>
+    
+    <script>
+        // Script para controlar a exibição dos vídeos
+        var currentVideoIndex = 0;
+        var videos = document.querySelectorAll('.video');
+    
+        function showVideo(index) {
+            videos.forEach(function(video, i) {
+                if (i === index) {
+                    video.style.display = 'block';
                 } else {
-                    console.error('Erro ao enviar dados.');
+                    video.style.display = 'none';
                 }
-            })
-            .catch(error => {
-                console.error('Erro ao enviar dados:', error);
             });
         }
-
-        // Função para limpar os campos do formulário após o envio bem-sucedido
-        function limparCamposFormulario(formId) {
-            var form = document.getElementById(formId);
-            
-            // Verificar se o formulário foi encontrado corretamente
-            if (form) {
-                form.reset();
-            } else {
-                console.error('Formulário não encontrado:', formId);
-            }
+    
+        function previousVideo() {
+            currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+            showVideo(currentVideoIndex);
         }
-
-        // Remover parâmetros desnecessários da URL
-        window.history.replaceState({}, document.title, window.location.pathname);
+    
+        function nextVideo() {
+            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            showVideo(currentVideoIndex);
+        }
+    
+        showVideo(currentVideoIndex); // Exibir o primeiro vídeo ao carregar a página
     </script>
-</body>
-</html>
+    </body>
+    </html>
