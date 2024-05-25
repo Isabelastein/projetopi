@@ -216,13 +216,13 @@
             resize: vertical; /* Permite redimensionamento vertical apenas para caixas de texto */
         }
 
-        /* Estilo para a mensagem de sucesso */
-        .success-message {
-            display: none;
-            color: green;
-            font-weight: bold;
-            margin-top: 10px;
-        }
+       /* Estilo para a mensagem de sucesso */
+       .success-message {
+        color: green;
+        font-weight: bold;
+        margin-top: 10px;
+        display: none; /* Inicialmente oculta a mensagem */
+    }
     </style>
 </head>
 <body>
@@ -288,17 +288,17 @@
                     </div>
                 </div>
 
-
                 <div id="duvidas" class="tab-content">
                     <div id="duvidas-texto" class="text-box">
                         <h2>Dúvidas</h2>
                         <p>Tem alguma dúvida sobre a síndrome de Witteveen-Kolk? Preencha o formulário abaixo e nossa equipe terá prazer em responder o mais breve possível.</p>
-                        <form id="duvidas-form" onsubmit="submitForm(event, 'duvidas')">
-                            <input type="text" name="nome-duvida" placeholder="Seu nome" required><br>
-                            <input type="email" name="email-duvida" placeholder="Seu e-mail" required><br>
-                            <textarea name="texto-duvida" placeholder="Sua dúvida" required></textarea><br>
-                            <button type="submit" class="submit-button">Enviar</button>
-                            <div class="success-message" id="duvidas-success">Sua dúvida foi enviada com sucesso!</div>
+                        <form id="form-duvidas">
+                            <label for="email-duvida">E-mail:</label>
+                            <input type="email" id="email-duvida" name="email-duvida" placeholder="Digite seu e-mail">
+                            <label for="nome-duvida">Nome:</label>
+                            <input type="text" id="nome-duvida" name="nome-duvida" placeholder="Digite seu nome">
+                            <textarea id="texto-duvida" name="texto-duvida" rows="4" placeholder="Digite sua dúvida aqui"></textarea>
+                            <button class="submit-button" onclick="enviarDados('duvidas', 'form-duvidas')">Enviar</button>
                         </form>
                     </div>
                 </div>
@@ -307,12 +307,13 @@
                     <div id="depoimentos-texto" class="text-box">
                         <h2>Depoimentos</h2>
                         <p>Compartilhe sua experiência pessoal com a síndrome de Witteveen-Kolk. Seu depoimento pode ajudar outras pessoas que estão passando pelo mesmo desafio.</p>
-                        <form id="depoimentos-form" onsubmit="submitForm(event, 'depoimentos')">
-                            <input type="text" name="nome-depoimento" placeholder="Seu nome" required><br>
-                            <input type="email" name="email-depoimento" placeholder="Seu e-mail" required><br>
-                            <textarea name="texto-depoimento" placeholder="Seu depoimento" required></textarea><br>
-                            <button type="submit" class="submit-button">Enviar</button>
-                            <div class="success-message" id="depoimentos-success">Seu depoimento foi enviado com sucesso!</div>
+                        <form id="form-depoimentos">
+                            <label for="email-depoimento">E-mail:</label>
+                            <input type="email" id="email-depoimento" name="email-depoimento" placeholder="Digite seu e-mail">
+                            <label for="nome-depoimento">Nome:</label>
+                            <input type="text" id="nome-depoimento" name="nome-depoimento" placeholder="Digite seu nome">
+                            <textarea id="texto-depoimento" name="texto-depoimento" rows="4" placeholder="Digite seu depoimento aqui"></textarea>
+                            <button class="submit-button" onclick="enviarDados('depoimentos', 'form-depoimentos')">Enviar</button>
                         </form>
                     </div>
                 </div>
@@ -321,18 +322,20 @@
                     <div id="sugestoesfeedback-texto" class="text-box">
                         <h2>Sugestões e Feedback</h2>
                         <p>Tem alguma sugestão ou feedback sobre este site? Queremos ouvir você! Use o formulário abaixo para nos enviar suas sugestões, críticas ou elogios.</p>
-                        <form id="sugestoesfeedback-form" onsubmit="submitForm(event, 'sugestoesfeedback')">
-                            <input type="text" name="nome-sugestao" placeholder="Seu nome" required><br>
-                            <input type="email" name="email-sugestao" placeholder="Seu e-mail" required><br>
-                            <textarea name="texto-sugestao" placeholder="Sua sugestão ou feedback" required></textarea><br>
-                            <button type="submit" class="submit-button">Enviar</button>
-                            <div class="success-message" id="sugestoesfeedback-success">Sua sugestão/feedback foi enviado com sucesso!</div>
+                        <form id="form-sugestoesfeedback">
+                            <label for="email-sugestao">E-mail:</label>
+                            <input type="email" id="email-sugestao" name="email-sugestao" placeholder="Digite seu e-mail">
+                            <label for="nome-sugestao">Nome:</label>
+                            <input type="text" id="nome-sugestao" name="nome-sugestao" placeholder="Digite seu nome">
+                            <textarea id="texto-sugestao" name="texto-sugestao" rows="4" placeholder="Digite sua sugestão ou feedback aqui"></textarea>
+                            <button class="submit-button" onclick="enviarDados('sugestoesfeedback', 'form-sugestoesfeedback')">Enviar</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+                
 
     <button class="logout-button" onclick="logout()">Logout</button>
 
@@ -362,11 +365,57 @@
             var form = document.getElementById(formName + '-form');
             var successMessage = document.getElementById(formName + '-success');
             form.reset(); // Limpa os campos do formulário
-            successMessage.style.display = 'block'; // Exibe a mensagem de sucesso
+    
+            // Exibe a mensagem de sucesso
+            successMessage.style.display = 'block';
+    
+            // Define um timer para ocultar a mensagem de sucesso após 5 segundos
             setTimeout(function() {
-                successMessage.style.display = 'none'; // Esconde a mensagem após 5 segundos
+                successMessage.style.display = 'none';
             }, 5000);
         }
+    
+        // Função para enviar os dados do formulário
+        function enviarDados(formName, formId) {
+            var form = document.getElementById(formId);
+            var formData = new FormData(form);
+    
+            fetch('enviar_dados.php?type=' + formName, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error('Erro:', data.error);
+                } else {
+                    console.log('Sucesso:', data.message);
+                    var successMessage = document.getElementById(formName + '-success');
+                    successMessage.style.display = 'block';
+                    successMessage.style.color = 'green';
+                    form.reset();
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar dados:', error);
+            });
+        }
+    
+        // Associa a função de envio aos formulários
+        document.getElementById('duvidas-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            enviarDados('duvidas', 'duvidas-form');
+        });
+    
+        document.getElementById('depoimentos-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            enviarDados('depoimentos', 'depoimentos-form');
+        });
+    
+        document.getElementById('sugestoesfeedback-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            enviarDados('sugestoesfeedback', 'sugestoesfeedback-form');
+        });
     
         // Função para fazer logout
         function logout() {
@@ -374,8 +423,8 @@
             window.location.href = "login.php";
         }
     
-        // Remove os parâmetros da URL após o caractere "?"
-        var urlWithoutParams = window.location.href.split('?')[0];
+       // Remove os parâmetros da URL após o caractere "?"
+       var urlWithoutParams = window.location.href.split('?')[0];
         window.history.replaceState({}, document.title, urlWithoutParams);
     </script>
     
@@ -406,5 +455,13 @@
     
         showVideo(currentVideoIndex); // Exibir o primeiro vídeo ao carregar a página
     </script>
-    </body>
-    </html>
+        <script>
+            // Espera até que o DOM esteja totalmente carregado
+            document.addEventListener("DOMContentLoaded", function() {
+                // Remove os parâmetros da URL após o caractere "?"
+                var urlWithoutParams = window.location.href.split('?')[0];
+                window.history.replaceState({}, document.title, urlWithoutParams);
+            });
+        </script>
+        </body>
+        </html>

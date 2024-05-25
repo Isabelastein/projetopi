@@ -1,5 +1,4 @@
 <?php
-
 // Mensagens de erro/sucesso
 $message = '';
 $error = '';
@@ -30,14 +29,21 @@ if (isset($_GET['type'])) {
                 $depoimento = $_POST['texto-depoimento'];
                 $email = $_POST['email-depoimento'];
                 $nome = $_POST['nome-depoimento'];
+                if (empty($depoimento) || empty($email) || empty($nome)) {
+                    die("Campos não podem estar vazios");
+                }
                 $sql = "INSERT INTO depoimentos (texto, email, nome) VALUES (?, ?, ?)";
                 $stmt = $conn->prepare($sql);
+                if ($stmt === false) {
+                    die("Erro ao preparar statement: " . $conn->error);
+                }
                 $stmt->bind_param("sss", $depoimento, $email, $nome);
                 if ($stmt->execute()) {
                     $message = "Depoimento inserido com sucesso";
                 } else {
                     $error = "Erro ao inserir depoimento: " . $stmt->error;
                 }
+                $stmt->close();
             } else {
                 $error = "Todos os campos são obrigatórios";
             }
@@ -48,14 +54,21 @@ if (isset($_GET['type'])) {
                 $duvida = $_POST['texto-duvida'];
                 $email = $_POST['email-duvida'];
                 $nome = $_POST['nome-duvida'];
+                if (empty($duvida) || empty($email) || empty($nome)) {
+                    die("Campos não podem estar vazios");
+                }
                 $sql = "INSERT INTO duvidas (texto, email, nome) VALUES (?, ?, ?)";
                 $stmt = $conn->prepare($sql);
+                if ($stmt === false) {
+                    die("Erro ao preparar statement: " . $conn->error);
+                }
                 $stmt->bind_param("sss", $duvida, $email, $nome);
                 if ($stmt->execute()) {
                     $message = "Dúvida inserida com sucesso";
                 } else {
                     $error = "Erro ao inserir dúvida: " . $stmt->error;
                 }
+                $stmt->close();
             } else {
                 $error = "Todos os campos são obrigatórios";
             }
@@ -66,14 +79,21 @@ if (isset($_GET['type'])) {
                 $sugestao = $_POST['texto-sugestao'];
                 $email = $_POST['email-sugestao'];
                 $nome = $_POST['nome-sugestao'];
+                if (empty($sugestao) || empty($email) || empty($nome)) {
+                    die("Campos não podem estar vazios");
+                }
                 $sql = "INSERT INTO sugestoesfeedback (texto, email, nome) VALUES (?, ?, ?)";
                 $stmt = $conn->prepare($sql);
+                if ($stmt === false) {
+                    die("Erro ao preparar statement: " . $conn->error);
+                }
                 $stmt->bind_param("sss", $sugestao, $email, $nome);
                 if ($stmt->execute()) {
                     $message = "Sugestão ou feedback inserido com sucesso";
                 } else {
                     $error = "Erro ao inserir sugestão ou feedback: " . $stmt->error;
                 }
+                $stmt->close();
             } else {
                 $error = "Todos os campos são obrigatórios";
             }
@@ -87,52 +107,14 @@ if (isset($_GET['type'])) {
 } else {
     $error = "Tipo de formulário não especificado";
 }
+
+// Resposta em formato JSON
+$response = array(
+    'message' => $message,
+    'error' => $error
+);
+
+// Retorna a resposta em JSON
+header('Content-Type: application/json');
+echo json_encode($response);
 ?>
-
-<!-- Formulário de depoimentos -->
-<?php if ($tipo_formulario === 'depoimentos') : ?>
-    <?php if ($error) : ?>
-        <p><?php echo $error; ?></p>
-    <?php elseif ($message) : ?>
-        <p><?php echo $message; ?></p>
-    <?php endif; ?>
-
-    <form action="" method="POST">
-        <input type="text" name="nome-depoimento" placeholder="Seu nome" required><br>
-        <input type="email" name="email-depoimento" placeholder="Seu email" required><br>
-        <textarea name="texto-depoimento" placeholder="Seu depoimento" required></textarea><br>
-        <button type="submit">Enviar Depoimento</button>
-    </form>
-<?php endif; ?>
-
-<!-- Formulário de dúvidas -->
-<?php if ($tipo_formulario === 'duvidas') : ?>
-    <?php if ($error) : ?>
-        <p><?php echo $error; ?></p>
-    <?php elseif ($message) : ?>
-        <p><?php echo $message; ?></p>
-    <?php endif; ?>
-
-    <form action="" method="POST">
-        <input type="text" name="nome-duvida" placeholder="Seu nome" required><br>
-        <input type="email" name="email-duvida" placeholder="Seu email" required><br>
-        <textarea name="texto-duvida" placeholder="Sua dúvida" required></textarea><br>
-        <button type="submit">Enviar Dúvida</button>
-    </form>
-<?php endif; ?>
-
-<!-- Formulário de sugestões e feedback -->
-<?php if ($tipo_formulario === 'sugestoesfeedback') : ?>
-    <?php if ($error) : ?>
-        <p><?php echo $error; ?></p>
-    <?php elseif ($message) : ?>
-        <p><?php echo $message; ?></p>
-    <?php endif; ?>
-
-    <form action="" method="POST">
-        <input type="text" name="nome-sugestao" placeholder="Seu nome" required><br>
-        <input type="email" name="email-sugestao" placeholder="Seu email" required><br>
-        <textarea name="texto-sugestao" placeholder="Sua sugestão ou feedback" required></textarea><br>
-        <button type="submit">Enviar Sugestão ou Feedback</button>
-    </form>
-<?php endif; ?>
