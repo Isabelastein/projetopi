@@ -1,4 +1,4 @@
 Esse é o meu primeiro projeto integrador com colegas, a proposta da Univesp, onde curso bacharelado em tecnologia da informação, para o PI 1 - Desenvolvimento de um software com framework web que utilize noções de banco de dados, praticando controle de versão.
-A princípio estamos utilizando, HTML, CSS, Javascript, PHP, para Banco de Dados, comecei com mysql porém a tendência é eu estar migrando para o MongoDB , é tudo novo para nós então tudo é aprendizado, horas dá certo horas não.
+A princípio estamos utilizando, HTML, CSS, Javascript, PHP, para Banco de Dados, Mysql , pretendemos manter assim , é tudo novo para nós então tudo é aprendizado, horas dá certo horas não.
 O website que está sendo desenvolvido é sobre a Sindrome de Witteveen Kolk, uma SÍNDROME RARA! Acomete a mim - Aluna Isabela Cristina Stein Campisano, então decidimos criar esse website para que mais pessoas conheçam sobre, além disso conheci através da internet uma mãe que tem o filho com a mesma síndrome, utilizamos disso então para levar mais o conhecimento para diversas pessoas.
-Aos poucos venho colocando novas coisas aqui, esse é um resumo básico apenas! 
+Aos poucos venho colocando novas coisas aqui!
